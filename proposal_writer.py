@@ -4,11 +4,11 @@ from docx.shared import Pt, Inches,RGBColor
 import sys
 import rail_description as rd
 
-
+print('proposal writer loaded...')
 def menu():
     enter = input('make proposal? (y/n): ')
     if enter.lower() == 'y':
-        write_proposal([40,50,60,78],[400,500,600,150])
+        write_proposal([40],[60])
     elif enter.lower() == 'n':
         sys.exit()
     else:
@@ -86,21 +86,21 @@ def write_proposal(_bid_lf,_bid_lfprice):
 
     #sections
     for num in range(len(_bid_lf)):
-        
+        bid_area = input('what is this section called? \n: ')
         b1_height,b1_post,b1_mount,b1_top,b1_bottom,b1_infill,b1_space,b1_type = rd.get_description()
         b1 = rd.return_description(b1_height,b1_post,b1_mount,b1_top,b1_bottom,b1_infill,b1_space,b1_type)
-        p1.add_run('Bid Item - {} Tall {} \n'.format(b1[0],b1[7])).bold = True
+        p1.add_run('Bid Item - {} Tall {} ({})\n'.format(b1[0],b1[7],bid_area)).bold = True
         p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} per engineering and customer request. Support blocking by others. Standard color(Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))    
-        if b1[7] == 'Hand rail':
+        if b1[7] == 'Grab rail':
             p1.add_run('Handrails are all ADA Compliant.')
         p1.add_run('\n\n')
-        p1.add_run('\t\t\t\t\t\t Total {} LF @ ${}.00 per LF = ${}.00*\n\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
+        p1.add_run('\t'*7 + ' Total {} LF @ ${}.00 per LF = ${}.00*\n\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
         subtotal += _bid_lf[num] * _bid_lfprice[num]
         
-    p1.add_run('\n\n\n')
-    p1.add_run('\t\t\t\t\t\t\t\t\tSub Total = {}.00*\n\n\n'.format(str(subtotal))).bold = True
+    p1.add_run('\n'*3)
+    p1.add_run('\t'*10 + 'Sub Total = {}.00*\n\n\n'.format(str(subtotal))).bold = True
     
-    p1.add_run('\t*This price quote is valid for 3 months from the date of this document*\n\n').italic = True
+    p1.add_run('\t\t*This price quote is valid for 3 months from the date of this document*\n\n').italic = True
 
     p1.add_run('Assumptions\n').bold = True
     p1.add_run('The following assumptions were made in support of this estimate:')

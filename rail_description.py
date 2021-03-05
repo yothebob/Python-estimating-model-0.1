@@ -2,14 +2,22 @@
 
 rail_height = ['36"','42"','34"-38"','custom']
 post_type = ['2-1/2 x 4" Base shoe','2-3/8" x 2-3/8" square aluminum posts', '2-3/8" x 2-3/8" Series 500 aluminum slotted Post','1.5" Sch 40','1.5" x 1.5" Square','1" x 2" Rectangular','custom' ]
+
 mounting_detail = ["fascia mounted to front of deck framing using PRO's Fascia brackets", 'fascia mounted to front of deck framing using steel angle iron (angle iron installed by others)',
                     'mounted directly to deck framing using engineered lags','mounted to top of deck surface using rubber gasket and 5x5 baseplate','fascia mounted to welded knife plates (knife plates by others)',
-                   'fascia mounted to angle aluminum brakets attached to halfens','wall mounted grabrail','core mounted grabrail using quikset grout','4" x 4" baseplate mounted grabrail','custom']
-top_rail = ['Top rail profile 200', 'Top rail profile 375','Top rail profile 400','CL Laurence 1" x 1-5/16" SS  Top rail Profile','No top rail','1 line', '2 line','3 line','custom']
-bottom_rail = ['with glass clips and bottom rail profile 200',' bottom rail profile 200',' with CR Laurence SS cladding','bottom rail profile 100','bottom rail profile 500','custom']
-infill = ['5/8" x 5/8" picket infill','1/4 laminated Tempered glass infill','3/8 laminated Tempered glass infill','1/2 laminated Tempered glass infill','9/16 laminated Tempered glass infill','custom']
+                   'fascia mounted to angle aluminum brakets attached to halfens','1 line', '2 line','3 line','custom']
+
+top_rail = ['Top rail profile 200', 'Top rail profile 375','Top rail profile 400','CL Laurence 1" x 1-5/16" SS  Top rail Profile','No top rail','core mounted grabrail','baseplate mounted grabrail','wall mounted grabrail','custom']
+
+bottom_rail = [' bottom rail profile 200',' with CR Laurence SS cladding','bottom rail profile 100','bottom rail profile 500','to be mounted directly to walls at stairs','to be mounted directly to aluminum posts at stairs',
+               'to be mounted directly into core hole pockets','to be mounted directly to surface','custom']
+
+infill = ['5/8" x 5/8" picket infill','1/4 laminated Tempered glass infill','3/8 laminated Tempered glass infill','1/2 laminated Tempered glass infill','9/16 laminated Tempered glass infill','quikset grout',
+          '4"x4" aluminum baseplate','decorative grabrail brackets','custom']
+
 spacing = ['',"2'","3'","4'","5'","6'",'custom']
-rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Hand rail','custom']
+
+rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail','custom']
 
 def get_description():
     for num in range(len(rail_height)):

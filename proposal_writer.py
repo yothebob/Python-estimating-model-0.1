@@ -5,36 +5,10 @@ import sys
 import rail_description as rd
 
 
-# Document Variables
-customer_name = 'Jane Doe ' #input('customer rep name?\n :')
-customer_company = 'INCLINE Construction' #input('customer company name?\n :')
-contact_info = ['971-111-1111','Janedoe@incline-cc.com'] #input('customer contact info?\n :')
-company_address = '1234 Place, Portland OR' #input('customer Business address?\n :')
-job_address = '5678 work st, tigard OR' #input('job site address?\n :')
-job_name = 'Big School Elementary Improvements' #input('Job name?\n :')
-
-#file = open('customer_detail.txt','r')
-
-#with file:
-#    customer_name = file.readline()
-#    customer_company = file.readline()
-#    contact_info = file.readline()
-#    company_address = file.readline()
-#    job_address = file.readline()
-#    job_name = file.readline()
-
-#file.close()
-
-today = date.today()
-d1 = today.strftime("%m/%d/%Y")
-
-total_info = [d1,customer_name,contact_info,customer_company,company_address,job_name,job_address]
-
-
 def menu():
     enter = input('make proposal? (y/n): ')
     if enter.lower() == 'y':
-        write_proposal(40,400,100,150)
+        write_proposal([40,50,60,78],[400,500,600,150])
     elif enter.lower() == 'n':
         sys.exit()
     else:
@@ -43,11 +17,23 @@ def menu():
 
 
 
-def write_proposal(b1_lf,b1_cost,b2_lf,b2_cost):
+def write_proposal(_bid_lf,_bid_lfprice):
     print('start making proposal...')
+
+    # Document Variables
+    customer_name = input('customer rep name?\n :')
+    customer_company =input('customer company name?\n :')
+    contact_info =input('customer contact info?\n :')
+    company_address =input('customer Business address?\n :')
+    job_address = input('job site address?\n :')
+    job_name = input('Job name?\n :')
+    today = date.today()
+    d1 = today.strftime("%m/%d/%Y")
+    subtotal = 0
+    total_info = [d1,customer_name,contact_info,customer_company,company_address,job_name,job_address]
+        
     #Document Setup
     document = Document()
-
     style = document.styles['Normal']
     font = style.font
     font.name = 'Times New Roman'
@@ -56,18 +42,17 @@ def write_proposal(b1_lf,b1_cost,b2_lf,b2_cost):
     paragraph_format = style.paragraph_format
     paragraph_format.space_before = Pt(3.4)
     paragraph_format.space_after = Pt(0)
-
     sections = document.sections
+    
     for section in sections:
         section.top_margin = Inches(.5)
         section.bottom_margin = Inches(.4)
         section.left_margin = Inches(.8)
         section.right_margin = Inches(.8)
 
-
     #header setup
     header = document.sections[0].header
-    h1 = header.paragraphs[0].add_run("\tPrecision Rail of Oregon, LLC\n").font.size = Pt(36)#\n10735 SE Foster RD \t\tPortland, Oregon 97266"
+    h1 = header.paragraphs[0].add_run("\tPrecision Rail of Oregon, LLC\n").font.size = Pt(36)
     h2 = header.paragraphs[0].add_run("10735 SE Foster RD").font.size = Pt(14)
     header.paragraphs[0].add_run('\t').add_picture('Alumarail_logo.png', width = Inches(1.8))
     h3 = header.paragraphs[0].add_run("\tPortland, Oregon 97266").font.size = Pt(14)
@@ -88,46 +73,37 @@ def write_proposal(b1_lf,b1_cost,b2_lf,b2_cost):
     document.add_paragraph('\n')
     for item in total_info:
         document.add_paragraph(str(item))
-
     document.add_paragraph('')
     document.add_paragraph('Dear ' + customer_name + ',\n')
-
     p1 = document.add_paragraph()
     p1.style = document.styles['Normal']
     
-    
     p1.add_run('Precision Rail of Oregon is pleased to provide the following proposal for: ')
     p1.add_run(job_name + ', BUDGET Rev-0 \n\n').bold = True
-    p1.add_run('Items furished by Precision Rail of Oregon: Submittal drawings, engineering, materials, and installation.\n\n').bold = True
+    p1.add_run('Items furnished by Precision Rail of Oregon: Submittal drawings, engineering, materials, and installation.\n\n').bold = True
     p1.add_run('Submittals:').bold = True
     p1.add_run(' Pricing includes 1 submittal based off plans and 1 revision once corrections are recieved from GC. Any Additional revisions to be billed at 145.00 per hour plus materials and handling. \n\n')
 
-    b1_height,b1_post,b1_mount,b1_top,b1_bottom,b1_infill,b1_space,b1_type = rd.get_description()
-    b1 = rd.return_description(b1_height,b1_post,b1_mount,b1_top,b1_bottom,b1_infill,b1_space,b1_type)
-    
-    p1.add_run('Bid Item - {}, {} \n'.format(b1[0],b1[7])).bold = True
-    p1.add_run("{} Tall {} {}. {}, {}, {}. Posts spacing to be spaced evenly and not exceed {} per engineering and customer request. Support blocking by others. Standard color(Black, Bronze, White).".format(b1[0],b1[1],b1[2],b1[3],b1[4],b1[5],b1[6])) 
+    #sections
+    for num in range(len(_bid_lf)):
         
-    p1.add_run('\n\n')
-    p1.add_run('\t\t\t\t\t\tTotal {} LF @ $ {} per LF = $ {} *\n\n\n'.format(str(b1_lf),str(b1_cost),str(b1_lf*b1_cost))).bold = True
-
-    b2_height,b2_post,b2_mount,b2_top,b2_bottom,b2_infill,b2_space,b2_type = rd.get_description()
-    b2 = rd.return_description(b2_height,b2_post,b2_mount,b2_top,b2_bottom,b2_infill,b2_space,b2_type)    
-    
-    p1.add_run('Bid Item - {}, {} \n'.format(b2[0],b2[7])).bold = True
-    p1.add_run("{} Tall {} {}. {}, {}, {}. Posts spacing to be spaced evenly and not exceed {} Per engineering and customer request. Support blocking by others. Standard color(Black, Bronze, White).".format(b2[0],b2[1],b2[2],b2[3],b2[4],b2[5],b2[6]))
-    p1.add_run('\n\n')
-    p1.add_run('\t\t\t\t\t\tTotal {} LF @ $ {} per LF = $ {}*\n\n\n'.format(str(b2_lf),str(b2_cost),str(b2_cost * b2_lf))).bold = True
-
+        b1_height,b1_post,b1_mount,b1_top,b1_bottom,b1_infill,b1_space,b1_type = rd.get_description()
+        b1 = rd.return_description(b1_height,b1_post,b1_mount,b1_top,b1_bottom,b1_infill,b1_space,b1_type)
+        p1.add_run('Bid Item - {} Tall {} \n'.format(b1[0],b1[7])).bold = True
+        p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} per engineering and customer request. Support blocking by others. Standard color(Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))    
+        if b1[7] == 'Hand rail':
+            p1.add_run('Handrails are all ADA Compliant.')
+        p1.add_run('\n\n')
+        p1.add_run('\t\t\t\t\t\t Total {} LF @ ${}.00 per LF = ${}.00*\n\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
+        subtotal += _bid_lf[num] * _bid_lfprice[num]
+        
     p1.add_run('\n\n\n')
-    p1.add_run('\t\t\t\t\t\t\t\t\tSub Total = {}*\n\n\n'.format(str((b1_cost * b1_lf) + (b2_cost * b2_lf)))).bold = True
+    p1.add_run('\t\t\t\t\t\t\t\t\tSub Total = {}.00*\n\n\n'.format(str(subtotal))).bold = True
     
-    
-    p1.add_run('*This price quote is valid for 3 months from the date of this document*\n\n').italic = True
+    p1.add_run('\t*This price quote is valid for 3 months from the date of this document*\n\n').italic = True
 
     p1.add_run('Assumptions\n').bold = True
     p1.add_run('The following assumptions were made in support of this estimate:')
-
 
     p1.add_run(
                 """
@@ -138,7 +114,7 @@ def write_proposal(b1_lf,b1_cost,b2_lf,b2_cost):
         5.	Paint / PPG Duracron with a 5 year warranty.
                 """)
     p1.add_run('\n')
-    p1.add_run('Items EXCLUDED by precision rail of oregon unless noted above:')
+    p1.add_run('Items EXCLUDED by Precision Rail of Oregon unless noted above:')
 
     p1.add_run(
         """
@@ -172,9 +148,8 @@ def write_proposal(b1_lf,b1_cost,b2_lf,b2_cost):
     sign.add_run('\n\n\n')
     sign.add_run('Acceptance of Proposal Signature _______________________              Date_______________   ')
 
-    document.save('testing.docx')
+    document.save('{} - rev 0.docx'.format(job_name))
     print('proposal finished!')
         
         
-#menu()
     

@@ -1,0 +1,7 @@
+ price per panel:
+
+ picket = 126 for fascia, 113 for surface. 8 for corners
+ glass = 268 for fascia, 256 surface , 8 for corners
+ BaseShoe(ss top rail/clading) = 566 per 4' panel, 306 per corner
+ series 500 rail = 456 per 4' panel (stanchion), 410 per 4' for halfen + angle bracket, corner += 50 
+        

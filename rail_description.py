@@ -1,25 +1,65 @@
 
 
-rail_height = ['36"','42"']
-post_type = ['2-1/2 x 4" Base shoe','2-3/8" x 2-3/8" square aluminum posts',]
+rail_height = ['36"','42"','34"-38"','custom']
+post_type = ['2-1/2 x 4" Base shoe','2-3/8" x 2-3/8" square aluminum posts', '2-3/8" x 2-3/8" Series 500 aluminum slotted Post','1.5" Sch 40','1.5" x 1.5" Square','1" x 2" Rectangular','custom' ]
 mounting_detail = ["fascia mounted to front of deck framing using PRO's Fascia brackets", 'fascia mounted to front of deck framing using steel angle iron (angle iron installed by others)',
-                    'mounted directly to deck framing using engineered lags',' mounted to top of deck surface using rubber gasket and 5x5 baseplate','fascia mounted to welded knife plates (knife plates by others)',
-                   'fascia mounted to angle aluminum brakets attached to halfens']
-top_rail = ['Top rail profile 200', 'Top rail profile 375','Top rail profile 400','CL Laurence 1" x 1-5/16" SS  Top rail Profile']
-bottom_rail = ['with glass clips and bottom rail profile 200',' bottom rail profile 200',' with CR Laurence SS cladding','bottom rail profile 100','bottom rail profile 200 wide']
-infill = ['5/8" x 5/8" picket infill','1/4 laminated Tempered glass infill','3/8 laminated Tempered glass infill','1/2 laminated Tempered glass infill','9/16 laminated Tempered glass infill']
-spacing = ['',"2'","3'","4'","5'","6'"]
-rail_type = ['Grab rail','Hand rail','Picket rail','Glass rail','Cable rail']
+                    'mounted directly to deck framing using engineered lags','mounted to top of deck surface using rubber gasket and 5x5 baseplate','fascia mounted to welded knife plates (knife plates by others)',
+                   'fascia mounted to angle aluminum brakets attached to halfens','wall mounted grabrail','core mounted grabrail using quikset grout','4" x 4" baseplate mounted grabrail','custom']
+top_rail = ['Top rail profile 200', 'Top rail profile 375','Top rail profile 400','CL Laurence 1" x 1-5/16" SS  Top rail Profile','No top rail','1 line', '2 line','3 line','custom']
+bottom_rail = ['with glass clips and bottom rail profile 200',' bottom rail profile 200',' with CR Laurence SS cladding','bottom rail profile 100','bottom rail profile 500','custom']
+infill = ['5/8" x 5/8" picket infill','1/4 laminated Tempered glass infill','3/8 laminated Tempered glass infill','1/2 laminated Tempered glass infill','9/16 laminated Tempered glass infill','custom']
+spacing = ['',"2'","3'","4'","5'","6'",'custom']
+rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Hand rail','custom']
 
 def get_description():
-    set_height = int(input('0. for 36" \n1. for 42"\n :'))
-    set_post = int(input('0. for base shoe\n1. for standard aluminum post\n :'))
-    set_mount = int(input('0. for fascia bracket\n1. for fascia steel angle iron\n2. for direct bolt to fascia\n3. for surface mount 5x5\n4. for knife plates\n5. for fascia with halfens and angle brackets\n :'))
-    set_top = int(input('0. for TR200\n1. for TR375\n2. for TR400\n3. for CRL SS Glass cap\n :'))
-    set_bottom = int(input('0. for glass clip + BR200\n1. for BR200\n2. for SS cladding\n3. for BR100\n4. for BR200 wide\n :'))
-    set_infill = int(input('0. for picket\n1. for 1/4 glass\n2. for 3/8 glass\n3. for 1/2 glass\n4. for 9/16 glass\n :'))
-    set_spacing = int(input('0. for NA\n1. for 2 foot\n2. for 3 foot\n3. for 4 foot\n4. for 5 foot\n5. for 6 foot\n :'))
-    set_type = int(input('0. for grabrail\n1. for handrail\n2. for picket rail\n3. for glass rail\n4. for cable rail\n :'))
+    for num in range(len(rail_height)):
+        print(str(num)+ '. for ' + rail_height[num])
+    set_height = int(input(': '))
+    if rail_height[set_height] == 'custom':
+        rail_height[set_height] = input(': ')
+        
+    for num in range(len(post_type)):
+        print(str(num) + '. for ' + post_type[num])
+    set_post = int(input(': '))
+    if post_type[set_post] == 'custom':
+        post_type[set_post] = input(': ')
+        
+    for num in range(len(mounting_detail)):
+        print(str(num) + '. for ' + mounting_detail[num])
+    set_mount = int(input(': '))
+    if mounting_detail[set_mount] == 'custom':
+        mounting_detail[set_mount] = input(': ')
+    
+    for num in range(len(top_rail)):
+        print(str(num) + '. for ' + top_rail[num])
+    set_top = int(input(': '))
+    if top_rail[set_top] == 'custom':
+        top_rail[set_top] = input(': ')
+        
+    for num in range(len(bottom_rail)):
+        print(str(num) + '. for ' + bottom_rail[num])
+    set_bottom = int(input(': '))
+    if bottom_rail[set_bottom] == 'custom':
+        bottom_rail[set_bottom] = input(': ')
+        
+    for num in range(len(infill)):
+        print(str(num) + '. for ' + infill[num])
+    set_infill = int(input(': '))
+    if infill[set_infill] == 'custom':
+        infill[set_infill] = input(': ')
+        
+    for num in range(len(spacing)):
+        print(str(num) + '. for ' + spacing[num])
+    set_spacing = int(input(': '))
+    if spacing[set_spacing] == 'custom':
+        spacing[set_spacing] = input(': ')
+        
+    for num in range(len(rail_type)):
+        print(str(num) + '. for ' + rail_type[num])
+    set_type = int(input(': '))
+    if rail_type[set_type] == 'custom':
+        rail_type[set_type] = input(': ')
+        
     return set_height,set_post,set_mount,set_top,set_bottom,set_infill,set_spacing,set_type
 
 def return_description(set_height,set_post,set_mount,set_top,set_bottom,set_infill,set_spacing,set_type):

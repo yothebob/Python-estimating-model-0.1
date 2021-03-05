@@ -6,7 +6,6 @@ import sys
 
 #this has been altered to work in conjunction with another program
 
-taco = 1234
 
 def cal_materials(_spacing,_corners,_lf,_panel_cost,_corner_cost):
     total = int((_corners * _corner_cost) + ((_lf / _spacing) * _panel_cost))
@@ -100,7 +99,13 @@ def start():
     elif user.lower() == "quote":
         get_estimate()
     elif user.lower() == "pricing":
-        print("price per panel: \n picket = 126 for fascia, 113 for surface. 8 for corners \n glass = 268 for fascia, 256 surface , 8 for corners \n BaseShoe = 566 per 4' panel, 306 per corner ")
+        print("""
+        price per panel: \n picket = 126 for fascia, 113 for surface. 8 for corners
+        glass = 268 for fascia, 256 surface , 8 for corners
+        BaseShoe(ss top rail/clading) = 566 per 4' panel, 306 per corner
+        series 500 rail = 456 per 4' panel (stanchion), 410 per 4' for halfen + angle bracket, corner += 50 """
+        
+              )
         print()
         print()
         start()
@@ -119,6 +124,7 @@ def get_estimate(_install_rate,_lf):
     spacing = int(input("post spacing? : "))
     panel_cost = int(input("typ cost per panel : "))
     corner_cost = int(input("additional cost for corners? : "))
+    engineering_cost = int(input('cost for drafting/engineering? : '))
     install_rate = _install_rate
     project_type = int(input("1-5 what type of project is it? refer to excel estimating model : "))
 
@@ -126,7 +132,7 @@ def get_estimate(_install_rate,_lf):
     print()
     
     material_cost = cal_materials(spacing,corner,lf,panel_cost,corner_cost)
-    engineering_cost,drafting_cost = cal_manual_eng(material_cost)
+    drafting_cost = 0
     labor_cost = cal_field(lf,int(_install_rate))
     total = cal_total(lf,labor_cost,material_cost,engineering_cost,project_type,drafting_cost)
 
@@ -150,11 +156,10 @@ def run_sim(_install_rate,_std_dev,_lf):
     panel_cost = int(input("What is typical cost per panel? \n : "))
     job_corners = int(input('how many corners? \n : '))
     corner_cost = int(input("What are additional costs needed for a corner? \n : "))
-    #high_install_rate = int(input("what is the optimistic install rate? \n : "))
-    #low_install_rate = int(input("what is the lowest install rate? \n : "))
+    engineering_cost = int(input('cost for drafting/engineering? : '))
     high_install_rate = _install_rate + _std_dev
     low_install_rate = _install_rate - _std_dev
-    iterations = int(input("How many gens would you like to run? \n : "))
+    iterations = 25
     project_type = int(input("what project type? 1-5 \n: "))
 
     install_rates = []
@@ -169,7 +174,8 @@ def run_sim(_install_rate,_std_dev,_lf):
         gen_install_rate = random.randrange(low_install_rate, high_install_rate)
 
         gen_materials = cal_materials(spacing,job_corners,lf,panel_cost,corner_cost)
-        gen_engineering,gen_drafting = cal_engineering(gen_materials)
+        gen_engineering = engineering_cost
+        gen_drafting = 0
         gen_field = cal_field(gen_lf,gen_install_rate)
         gen_total = cal_total(gen_lf,gen_field,gen_materials,gen_engineering,project_type,gen_drafting)
         print("Gen LF: " + str(gen_lf))
@@ -211,3 +217,5 @@ def run_sim(_install_rate,_std_dev,_lf):
     #start()
 
 #run = start()
+
+

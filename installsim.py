@@ -21,7 +21,7 @@ lf_day = []
 def menu():
     rerun = input('run simulation?(y/n) \n : ')
     if 'y'.lower() in rerun:
-        gen = int(input('how many gens do you want to run? : '))
+        gen = 50
         prob_rate = int(input('rate of problem?'))
         run_simulation(gen,prob_rate)
     else:
@@ -61,6 +61,7 @@ def run_simulation(_gen,_prob_rate,_maxlf,_minlf,_lf):
             if mins == 5:
                 mins = 0
                 hour += 1
+                day += .125
                 problem = random.randrange(_prob_rate)
                 
             if run_problem > 0:
@@ -69,7 +70,6 @@ def run_simulation(_gen,_prob_rate,_maxlf,_minlf,_lf):
             job_lf -= install_rate
             if hour == 8:
                 hour = 0
-                day += 1
                 print('Day : '+ str(day))
                 print('tot problems: ' + str(total_problems))
                 
